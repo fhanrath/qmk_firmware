@@ -27,33 +27,43 @@ enum cutom_keycodes {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case FEN_AE:
-            register_code(KC_ALGR);
-            SEND_STRING("q");
-            unregister_code(KC_ALGR);
+            if (record->event.pressed) {
+                register_code(KC_ALGR);
+                SEND_STRING("q");
+                unregister_code(KC_ALGR);
+            }
             break;
 
         case FEN_UE:
-            register_code(KC_ALGR);
-            SEND_STRING("y");
-            unregister_code(KC_ALGR);
+            if (record->event.pressed) {
+                register_code(KC_ALGR);
+                SEND_STRING("y");
+                unregister_code(KC_ALGR);
+            }
             break;
 
         case FEN_OE:
-            register_code(KC_ALGR);
-            SEND_STRING("p");
-            unregister_code(KC_ALGR);
+            if (record->event.pressed) {
+                register_code(KC_ALGR);
+                SEND_STRING("p");
+                unregister_code(KC_ALGR);
+            }
             break;
 
         case FEN_SZ:
-            register_code(KC_ALGR);
-            SEND_STRING("s");
-            unregister_code(KC_ALGR);
+            if (record->event.pressed) {
+                register_code(KC_ALGR);
+                SEND_STRING("s");
+                unregister_code(KC_ALGR);
+            }
             break;
 
         case FEN_EUR:
-            register_code(KC_ALGR);
-            SEND_STRING("5");
-            unregister_code(KC_ALGR);
+            if (record->event.pressed) {
+                register_code(KC_ALGR);
+                SEND_STRING("5");
+                unregister_code(KC_ALGR);
+            }
             break;
     }
     return true;
