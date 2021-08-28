@@ -62,9 +62,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 enum layers {
     _COLEMAKDH = 0,
-    _LOWER,
-    _RAISE,
-    _ADJUST
+    _NUMBERS,
+    _NAVIGATION,
+    _SYMBOL,
+    _UMLAUT
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -190,9 +191,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //     ),
 };
 
-layer_state_t layer_state_set_user(layer_state_t state) {
-    return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
-}
+// layer_state_t layer_state_set_user(layer_state_t state) {
+//     return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+// }
 
 #ifdef OLED_DRIVER_ENABLE
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
@@ -230,17 +231,20 @@ static void render_status(void) {
     // Host Keyboard Layer Status
     oled_write_P(PSTR("Layer: "), false);
     switch (get_highest_layer(layer_state)) {
-        case _QWERTY:
-            oled_write_P(PSTR("Default\n"), false);
+        case _COLEMAKDH:
+            oled_write_P(PSTR("Colemak DH\n"), false);
             break;
-        case _LOWER:
-            oled_write_P(PSTR("Lower\n"), false);
+        case _NUMBERS:
+            oled_write_P(PSTR("Numbers\n"), false);
             break;
-        case _RAISE:
-            oled_write_P(PSTR("Raise\n"), false);
+        case _NAVIGATION:
+            oled_write_P(PSTR("Navigation\n"), false);
             break;
-        case _ADJUST:
-            oled_write_P(PSTR("Adjust\n"), false);
+        case _SYMBOL:
+            oled_write_P(PSTR("Symbol\n"), false);
+            break;
+        case _UMLAUT:
+            oled_write_P(PSTR("Umlaut\n"), false);
             break;
         default:
             oled_write_P(PSTR("Undefined\n"), false);
