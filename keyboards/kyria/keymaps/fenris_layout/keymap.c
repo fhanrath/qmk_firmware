@@ -85,7 +85,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-------------------------------------------.                              ,-------------------------------------------.
  * |  ESC   |   Q  |   W  |   F  |   P  |   B  |                              |   J  |   L  |   U  |   Y  | ;  : |  | \   |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |  Tab   |   A  |   R  |   S  |   T  |   G  |                              |   M  |   J  |   K  |   L  |  O   |  ' "   |
+ * |  Tab   |   A  |   R  |   S  |   T  |   G  |                              |   M  |   N  |   E  |   I  |  O   |  ' "   |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
  * |  Ctrl  |   Z  |   X  |   C  |   D  |   V  | Enter| =  + |  | DEL  |  BS  |   K  |   H  | ,  < | . >  | /  ? |  - _   |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
@@ -107,7 +107,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |        |      |  F4  |  F5  |  F6  | F11  |                              |      |  4   |  5   |  6   |      |        |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |  Ctrl  |      |  F1  |  F2  |  F3  | F12  |      |Screen|  |      |      |      |  1   |  2   |  3   |      |        |
+ * |  Ctrl  |      |  F1  |  F2  |  F3  | F12  |      |Screen|  | DEL  |  BS  |      |  1   |  2   |  3   |      |        |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        |      |      | Alt  |      | Super|  |      |LShift|  0   |      |      |
  *                        |      |      |      |      |      |  |      |      |      |      |      |
@@ -116,7 +116,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_NUMBERS] = LAYOUT(
  TO(_COLEMAKDH), XXXXXXX,   KC_F7,   KC_F8,   KC_F9,  KC_F10,                                     XXXXXXX,    KC_7,    KC_8,    KC_9, XXXXXXX, XXXXXXX,
         XXXXXXX, XXXXXXX,   KC_F4,   KC_F5,   KC_F6,  KC_F11,                                     XXXXXXX,    KC_4,    KC_5,    KC_6, XXXXXXX, XXXXXXX,
-        _______, XXXXXXX,   KC_F1,   KC_F2,   KC_F3,  KC_F12, XXXXXXX, KC_PSCR, XXXXXXX, XXXXXXX, XXXXXXX,    KC_1,    KC_2,    KC_3, XXXXXXX, XXXXXXX,
+        _______, XXXXXXX,   KC_F1,   KC_F2,   KC_F3,  KC_F12, XXXXXXX, KC_PSCR, _______, _______, XXXXXXX,    KC_1,    KC_2,    KC_3, XXXXXXX, XXXXXXX,
                                    XXXXXXX, XXXXXXX, _______, XXXXXXX, _______, XXXXXXX, _______,    KC_0, XXXXXXX, XXXXXXX
     ),
 /*
@@ -134,7 +134,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
     [_NAVIGATION] = LAYOUT(
- TO(_COLEMAKDH), XXXXXXX, KC_BTN1, KC_BTN2, KC_BTN3, KC_WH_U,                                     XXXXXXX, XXXXXXX,   KC_UP, XXXXXXX, XXXXXXX, XXXXXXX,
+ TO(_COLEMAKDH), XXXXXXX, KC_BTN1, KC_BTN3, KC_BTN2, KC_WH_U,                                     XXXXXXX, XXXXXXX,   KC_UP, XXXXXXX, XXXXXXX, XXXXXXX,
         _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_WH_D,                                     XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT, KC_MS_U, XXXXXXX,
         _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, XXXXXXX, _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_R,
                                    XXXXXXX, XXXXXXX, _______, _______, XXXXXXX, XXXXXXX, _______, XXXXXXX, XXXXXXX, XXXXXXX
