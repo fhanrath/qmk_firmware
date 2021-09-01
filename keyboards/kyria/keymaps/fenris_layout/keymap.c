@@ -100,24 +100,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                           XXXXXXX, TO(_NAVIGATION), KC_LOPT, KC_SPC, KC_LCMD, MO(_UMLAUT), KC_LSFT, MO(_SYMBOL),  TO(_NUMBERS), XXXXXXX
     ),
 /*
- * Number Layout 
+ * Number Layout
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |  Back  |      |  F7  |  F8  |  F9  | F10  |                              |      |  7   |  8   |  9   |      |        |
+ * |  Back  |      |  F7  |  F8  |  F9  | F10  |                              |      |  7   |  8   |  9   |  ;   |        |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |        |      |  F4  |  F5  |  F6  | F11  |                              |      |  4   |  5   |  6   |      |        |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |  Ctrl  |      |  F1  |  F2  |  F3  | F12  |      |Screen|  | DEL  |  BS  |      |  1   |  2   |  3   |      |        |
+ * |  Ctrl  |      |  F1  |  F2  |  F3  | F12  | Enter| =  + |  | DEL  |  BS  |      |  1   |  2   |  3   |      |   -    |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |      |      | Alt  |      | Super|  |      |LShift|  0   |      |      |
+ *                        |      |      | Alt  | Space| Super|  |      |LShift|  0   |  ,   |  .   |
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
     [_NUMBERS] = LAYOUT(
- TO(_COLEMAKDH), XXXXXXX,   KC_F7,   KC_F8,   KC_F9,  KC_F10,                                     XXXXXXX,    KC_7,    KC_8,    KC_9, XXXXXXX, XXXXXXX,
+ TO(_COLEMAKDH), XXXXXXX,   KC_F7,   KC_F8,   KC_F9,  KC_F10,                                     XXXXXXX,    KC_7,    KC_8,    KC_9, KC_SCLN, XXXXXXX,
         XXXXXXX, XXXXXXX,   KC_F4,   KC_F5,   KC_F6,  KC_F11,                                     XXXXXXX,    KC_4,    KC_5,    KC_6, XXXXXXX, XXXXXXX,
-        _______, XXXXXXX,   KC_F1,   KC_F2,   KC_F3,  KC_F12, XXXXXXX, KC_PSCR, _______, _______, XXXXXXX,    KC_1,    KC_2,    KC_3, XXXXXXX, XXXXXXX,
-                                   XXXXXXX, XXXXXXX, _______, XXXXXXX, _______, XXXXXXX, _______,    KC_0, XXXXXXX, XXXXXXX
+        _______, XXXXXXX,   KC_F1,   KC_F2,   KC_F3,  KC_F12, _______, _______, _______, _______, XXXXXXX,    KC_1,    KC_2,    KC_3, XXXXXXX, KC_MINS,
+                                   XXXXXXX, XXXXXXX, _______, _______, _______, XXXXXXX, _______,    KC_0, KC_COMM, KC_DOT
     ),
 /*
  * Navigation Layout
@@ -129,7 +129,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
  * |  Ctrl  |      |      |PG dow| End  |      | Enter|      |  | DEL  |  BS  |      |      |      | MLeft| MDown| MRight |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |      |      | Alt  | Space|      |  |      |LShift|      |      |      |
+ *                        |      |      | Alt  | Space|      |  |      |LShift|      |      |Screen|
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
@@ -137,7 +137,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  TO(_COLEMAKDH), XXXXXXX, KC_BTN1, KC_BTN3, KC_BTN2, KC_WH_U,                                     XXXXXXX, XXXXXXX,   KC_UP, XXXXXXX, XXXXXXX, XXXXXXX,
         _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_WH_D,                                     XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT, KC_MS_U, XXXXXXX,
         _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, XXXXXXX, _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_R,
-                                   XXXXXXX, XXXXXXX, _______, _______, XXXXXXX, XXXXXXX, _______, XXXXXXX, XXXXXXX, XXXXXXX
+                                   XXXXXXX, XXXXXXX, _______, _______, XXXXXXX, XXXXXXX, _______, XXXXXXX, XXXXXXX, KC_PSCR
     ),
 /*
  * Symbol Layer
