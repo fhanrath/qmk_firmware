@@ -7,3 +7,5 @@ RGBLIGHT_ENABLE = no
 RGB_MATRIX_ENABLE = yes
 
 BOOTLOADER = atmel-dfu
+
+TAP_DANCE_ENABLE = yes
