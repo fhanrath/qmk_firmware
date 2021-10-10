@@ -25,14 +25,13 @@ enum layers {
 #define TO_NAV   TO(_NAVIGATION)        // Switch
 #define TO_NUM   TO(_NUMBERS)
 
-#define BACKSP   MT(MOD_LCTL, KC_BSPC)  //Mod Tap Modifier when held, key when tapped
-#define TAB      MT(MOD_LALT, KC_TAB)
+#define BACKSP   MT(MOD_LCTL, KC_BSPC)  //Modifier when held, key when tapped
 #define MOD_A    MT(MOD_LGUI, KC_A)
-#define MOD_R    MT(MOD_LALT, KC_R)
 #define CTL_ESC  MT(MOD_LCTL, KC_ESC)
 
 
-#define OS_SFT   OSM(MOD_LSFT)          //OneShotModifier Tap to modify next key. Holding works too
+#define OS_LSFT  OSM(MOD_LSFT)          //OneShotModifier Tap to modify next key. Holding works too
+#define OS_RSFT  OSM(MOD_RSFT)
 #define OS_ALT   OSM(MOD_LALT)
 
 
@@ -42,6 +41,7 @@ enum layers {
 enum {
     TD_NUM_SYM,
     TD_NAV_UML,
+    TD_BAK_ALT,
 };
 
 typedef enum {
@@ -65,3 +65,7 @@ void num_sim_reset(qk_tap_dance_state_t *state, void *user_data);
 // Functions associated with individual tap dances
 void num_sim_finished(qk_tap_dance_state_t *state, void *user_data);
 void nav_uml_reset(qk_tap_dance_state_t *state, void *user_data);
+
+// Functions associated with individual tap dances
+void bak_alt_finished(qk_tap_dance_state_t *state, void *user_data);
+void bak_alt_reset(qk_tap_dance_state_t *state, void *user_data);

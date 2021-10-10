@@ -68,24 +68,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 // Tap Dance
 
-//TODO: doesnt work this way. gointg to bed and trying again tomorrow.
-
-// Tap Dance definitions
 qk_tap_dance_action_t tap_dance_actions[] = {
 	[TD_NUM_SYM] = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, num_sim_finished, num_sim_reset, 100),
 	[TD_NAV_UML] = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, nav_uml_finished, nav_uml_reset, 100),
+	[TD_BAK_ALT] = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, bak_alt_finished, bak_alt_reset, 100),
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_COLEMAKDH] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       OS_SFT,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN,  BACKSP,
+      OS_LSFT,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN, TD(TD_BAK_ALT),
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
        KC_TAB,   MOD_A,    KC_R,    KC_S,    KC_T,    KC_G,                         KC_M,    KC_N,    KC_E,    KC_I,    KC_O, KC_QUOT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       CTL_ESC,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, KC_MINS,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                   TD(TD_NAV_UML),  KC_SPC, KC_LOPT,    KC_ENT,   OS_SFT,  TD(TD_NUM_SYM)
+                                   TD(TD_NAV_UML),  KC_SPC, KC_LOPT,    KC_ENT,  OS_RSFT,  TD(TD_NUM_SYM)
                                       //`--------------------------'  `--------------------------'
 
   ),
@@ -254,4 +252,34 @@ void nav_uml_reset(qk_tap_dance_state_t *state, void *user_data) {
         layer_off(_UMLAUT);
     }
     nav_uml_tap_state.state = TD_NONE;
+}
+
+// Initialize tap structure associated with example tap dance key
+static td_tap_t bak_alt_tap_state = {
+    .state = TD_NONE
+};
+
+// Functions that control what our tap dance key does
+void bak_alt_finished(qk_tap_dance_state_t *state, void *user_data) {
+    bak_alt_tap_state.state = cur_dance_tap_hold(state);
+    switch (bak_alt_tap_state.state) {
+        case TD_SINGLE_TAP:
+            register_code(KC_BSPC);
+            break;
+        case TD_SINGLE_HOLD:
+            register_code(KC_LCTL);
+            register_code(KC_BSPC);
+            break;
+        default:
+            break;
+    }
+}
+
+void bak_alt_reset(qk_tap_dance_state_t *state, void *user_data) {
+    // If the key was held down and now is released then switch off the layer
+    if (bak_alt_tap_state.state == TD_SINGLE_HOLD) {
+        unregister_code(KC_LCTL);
+    }
+    unregister_code(KC_BSPC);
+    bak_alt_tap_state.state = TD_NONE;
 }
