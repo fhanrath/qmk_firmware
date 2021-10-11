@@ -65,7 +65,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
     return true;
 }
-ßß
+
 // Tap Dance
 
 qk_tap_dance_action_t tap_dance_actions[] = {
