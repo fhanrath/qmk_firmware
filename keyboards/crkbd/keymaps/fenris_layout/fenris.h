@@ -3,7 +3,8 @@ enum cutom_keycodes {
     FEN_UE,
     FEN_OE,
     FEN_SZ,
-    FEN_EUR
+    FEN_EUR,
+    FEN_VMF
 };
 
 enum layers {
@@ -11,13 +12,15 @@ enum layers {
     _NUMBERS,
     _NAVIGATION,
     _SYMBOL,
-    _UMLAUT
+    _UMLAUT,
+    _SPECIAL
 };
 
 
 // Aliases for readability
 
 #define COLEMAK  TO(_COLEMAKDH)        // Default
+#define SPECIAL  TO(_SPECIAL)
 
 #define MO_UML   MO(_UMLAUT)            // Switch while held
 #define MO_SYM   MO(_SYMBOL)            
@@ -28,6 +31,7 @@ enum layers {
 #define BACKSP   MT(MOD_LCTL, KC_BSPC)  //Modifier when held, key when tapped
 #define MOD_A    MT(MOD_LGUI, KC_A)
 #define CTL_ESC  MT(MOD_LCTL, KC_ESC)
+#define SFT_ESC  MT(MOD_LSFT, KC_ESC)
 
 
 #define OS_LSFT  OSM(MOD_LSFT)          //OneShotModifier Tap to modify next key. Holding works too
@@ -40,8 +44,7 @@ enum layers {
 
 enum {
     TD_NUM_SYM,
-    TD_NAV_UML,
-    TD_BAK_ALT,
+    TD_NAV_UML
 };
 
 typedef enum {
@@ -65,7 +68,3 @@ void num_sim_reset(qk_tap_dance_state_t *state, void *user_data);
 // Functions associated with individual tap dances
 void num_sim_finished(qk_tap_dance_state_t *state, void *user_data);
 void nav_uml_reset(qk_tap_dance_state_t *state, void *user_data);
-
-// Functions associated with individual tap dances
-void bak_alt_finished(qk_tap_dance_state_t *state, void *user_data);
-void bak_alt_reset(qk_tap_dance_state_t *state, void *user_data);

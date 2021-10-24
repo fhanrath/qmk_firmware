@@ -62,6 +62,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 unregister_code(KC_ALGR);
             }
             break;
+
+        case FEN_VMF:
+            if (record->event.pressed) {
+                register_code(KC_RCTRL);
+                SEND_STRING("f");
+                unregister_code(KC_RCTRL);
+            }
+            break;
     }
     return true;
 }
@@ -69,19 +77,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 // Tap Dance
 
 qk_tap_dance_action_t tap_dance_actions[] = {
-	[TD_NUM_SYM] = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, num_sim_finished, num_sim_reset, 100),
-	[TD_NAV_UML] = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, nav_uml_finished, nav_uml_reset, 100),
-	[TD_BAK_ALT] = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, bak_alt_finished, bak_alt_reset, 100),
+	[TD_NUM_SYM] = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, num_sim_finished, num_sim_reset, 200),
+	[TD_NAV_UML] = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, nav_uml_finished, nav_uml_reset, 200),
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_COLEMAKDH] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      OS_LSFT,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN, TD(TD_BAK_ALT),
+      SFT_ESC,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN, KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-       KC_TAB,   MOD_A,    KC_R,    KC_S,    KC_T,    KC_G,                         KC_M,    KC_N,    KC_E,    KC_I,    KC_O, KC_QUOT,
+       KC_TAB,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                         KC_M,    KC_N,    KC_E,    KC_I,    KC_O, KC_QUOT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      CTL_ESC,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, KC_MINS,
+     KC_LCTRL,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, KC_MINS,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                    TD(TD_NAV_UML),  KC_SPC, KC_LOPT,    KC_ENT,  OS_RSFT,  TD(TD_NUM_SYM)
                                       //`--------------------------'  `--------------------------'
@@ -96,7 +103,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, KC_LALT,   KC_F1,   KC_F2,   KC_F3,  KC_F12,                      XXXXXXX,    KC_1,    KC_2,    KC_3,  KC_EQL, KC_MINS,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          XXXXXXX, _______, _______,    _______, _______,    KC_0
+                                          SPECIAL, _______, _______,    _______, _______,    KC_0
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -108,7 +115,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_PSCR,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          XXXXXXX, _______, _______,    _______, _______, XXXXXXX
+                                          XXXXXXX, _______, _______,    _______, _______, SPECIAL
+                                      //`--------------------------'  `--------------------------'
+  ),
+
+  [_SPECIAL] = LAYOUT_split_3x6_3(
+  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+      COLEMAK, XXXXXXX, XXXXXXX, FEN_VMF, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                          XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -169,6 +188,9 @@ void oled_render_layer_state(void) {
             break;
         case _UMLAUT:
             oled_write_ln_P(PSTR("Umlaut"), false);
+            break;
+        case _SPECIAL:
+            oled_write_ln_P(PSTR("Special"), false);
             break;
     }
 }
@@ -252,34 +274,4 @@ void nav_uml_reset(qk_tap_dance_state_t *state, void *user_data) {
         layer_off(_UMLAUT);
     }
     nav_uml_tap_state.state = TD_NONE;
-}
-
-// Initialize tap structure associated with example tap dance key
-static td_tap_t bak_alt_tap_state = {
-    .state = TD_NONE
-};
-
-// Functions that control what our tap dance key does
-void bak_alt_finished(qk_tap_dance_state_t *state, void *user_data) {
-    bak_alt_tap_state.state = cur_dance_tap_hold(state);
-    switch (bak_alt_tap_state.state) {
-        case TD_SINGLE_TAP:
-            register_code(KC_BSPC);
-            break;
-        case TD_SINGLE_HOLD:
-            register_code(KC_LCTL);
-            register_code(KC_BSPC);
-            break;
-        default:
-            break;
-    }
-}
-
-void bak_alt_reset(qk_tap_dance_state_t *state, void *user_data) {
-    // If the key was held down and now is released then switch off the layer
-    if (bak_alt_tap_state.state == TD_SINGLE_HOLD) {
-        unregister_code(KC_LCTL);
-    }
-    unregister_code(KC_BSPC);
-    bak_alt_tap_state.state = TD_NONE;
 }

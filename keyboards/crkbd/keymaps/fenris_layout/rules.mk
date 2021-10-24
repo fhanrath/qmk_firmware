@@ -9,3 +9,5 @@ RGB_MATRIX_ENABLE = yes
 BOOTLOADER = atmel-dfu
 
 TAP_DANCE_ENABLE = yes
+
+COMMAND_ENABLE = yes

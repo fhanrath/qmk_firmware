@@ -43,7 +43,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     #define RGBLIGHT_VAL_STEP 17
 #endif
 
-#define OLED_FONT_H "keyboards/crkbd/lib/glcdfont.c"
+//use my font. made with https://helixfonteditor.netlify.app via https://github.com/RustyJonez/OLED-ART-tinkering
+#define OLED_FONT_H "keyboards/crkbd/keymaps/fenris_layout/glcdfont.c"
 
 // disable rgb matrix effects to save space
 #define DISABLE_RGB_MATRIX_GRADIENT_UP_DOWN
