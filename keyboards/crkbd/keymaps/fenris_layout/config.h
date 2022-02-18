@@ -33,18 +33,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define IGNORE_MOD_TAP_INTERRUPT
 #define TAPPING_TERM 200
 
-#ifdef RGBLIGHT_ENABLE
-    #undef RGBLED_NUM
-    #define RGBLIGHT_ANIMATIONS
-    #define RGBLED_NUM 27
-    #define RGBLIGHT_LIMIT_VAL 120
-    #define RGBLIGHT_HUE_STEP 10
-    #define RGBLIGHT_SAT_STEP 17
-    #define RGBLIGHT_VAL_STEP 17
-#endif
-
 //use my font. made with https://helixfonteditor.netlify.app via https://github.com/RustyJonez/OLED-ART-tinkering
 #define OLED_FONT_H "keyboards/crkbd/keymaps/fenris_layout/glcdfont.c"
+
+#define SPLIT_LAYER_STATE_ENABLE
+#define RGB_MATRIX_MAXIMUM_BRIGHTNESS 120
+#define RGB_DISABLE_WHEN_USB_SUSPENDED
+#define SPLIT_TRANSPORT_MIRROR
 
 // disable rgb matrix effects to save space
 #define DISABLE_RGB_MATRIX_GRADIENT_UP_DOWN

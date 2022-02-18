@@ -157,9 +157,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 #ifdef RGB_MATRIX_ENABLE
-void keyboard_post_init_user(void) {
-    rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
-    rgb_matrix_sethsv_noeeprom(180, 255, 255);
+void rgb_matrix_indicators_user(void) {
+    switch(get_highest_layer(layer_state|default_layer_state)) {
+        case _NUMBERS:
+            rgb_matrix_set_color_all(0, 255, 255);
+            break;
+        case _NAVIGATION:
+            rgb_matrix_set_color_all(0, 63, 255);
+            break;
+        case _SYMBOL:
+            rgb_matrix_set_color_all(0, 255, 59);
+            break;
+        case _UMLAUT:
+            rgb_matrix_set_color_all(199, 255, 0);
+            break;
+        case _SPECIAL:
+            rgb_matrix_set_color_all(255, 0, 0);
+            break;
+        default:
+            rgb_matrix_set_color_all(63, 0, 255);
+            break;
+    }
 }
 #endif
 
@@ -204,12 +222,13 @@ void oled_render_logo(void) {
     oled_write_P(crkbd_logo, false);
 }
 
-void oled_task_user(void) {
+bool oled_task_user(void) {
     if (is_keyboard_master()) {
         oled_render_layer_state();
     } else {
         oled_render_logo();
     }
+    return false;
 }
 
 #endif // OLED_ENABLE

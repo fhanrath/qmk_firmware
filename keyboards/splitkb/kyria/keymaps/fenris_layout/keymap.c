@@ -15,7 +15,6 @@
  */
 #include QMK_KEYBOARD_H
 
-
 enum cutom_keycodes {
     FEN_AE = SAFE_RANGE,
     FEN_UE,
@@ -221,6 +220,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 //     ),
 };
+
 
 /* The default OLED and rotary encoder code can be found at the bottom of qmk_firmware/keyboards/splitkb/kyria/rev1/rev1.c
  * These default settings can be overriden by your own settings in your keymap.c
