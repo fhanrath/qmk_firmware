@@ -37,7 +37,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define OLED_FONT_H "keyboards/crkbd/keymaps/fenris_layout/glcdfont.c"
 
 #define SPLIT_LAYER_STATE_ENABLE
-#define RGB_MATRIX_MAXIMUM_BRIGHTNESS 120
+#define RGB_MATRIX_MAXIMUM_BRIGHTNESS 100
 #define RGB_DISABLE_WHEN_USB_SUSPENDED
 #define SPLIT_TRANSPORT_MIRROR
 

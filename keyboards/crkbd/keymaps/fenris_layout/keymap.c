@@ -160,22 +160,28 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 void rgb_matrix_indicators_user(void) {
     switch(get_highest_layer(layer_state|default_layer_state)) {
         case _NUMBERS:
-            rgb_matrix_set_color_all(0, 255, 255);
+            //rgb_matrix_sethsv_noeeprom(128, 255, 255);
+            rgb_matrix_set_color_all(0, 64, 64);
             break;
         case _NAVIGATION:
-            rgb_matrix_set_color_all(0, 63, 255);
+            //rgb_matrix_sethsv_noeeprom(159, 255, 255);
+            rgb_matrix_set_color_all(0, 15, 63);
             break;
         case _SYMBOL:
-            rgb_matrix_set_color_all(0, 255, 59);
+            //rgb_matrix_sethsv_noeeprom(95, 255, 255);
+            rgb_matrix_set_color_all(0, 63, 14);
             break;
         case _UMLAUT:
-            rgb_matrix_set_color_all(199, 255, 0);
+            //rgb_matrix_sethsv_noeeprom(52, 255, 255);
+            rgb_matrix_set_color_all(49, 63, 0);
             break;
         case _SPECIAL:
-            rgb_matrix_set_color_all(255, 0, 0);
+            //rgb_matrix_sethsv_noeeprom(0, 255, 255);
+            rgb_matrix_set_color_all(63, 0, 0);
             break;
         default:
-            rgb_matrix_set_color_all(63, 0, 255);
+            //rgb_matrix_sethsv(181, 255, 255);
+            rgb_matrix_set_color_all(16, 0, 64);
             break;
     }
 }
