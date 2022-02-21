@@ -57,6 +57,7 @@ enum layers {
 #define WM_0 LGUI(KC_0)
 
 #define WM_LAUN LGUI(KC_D)
+#define WM_FSCR LGUI(KC_F)
 
 
 
