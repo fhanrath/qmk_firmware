@@ -23,51 +23,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case FEN_AE:
+        case FEN_KILL:
             if (record->event.pressed) {
-                register_code(KC_ALGR);
+                register_code(KC_LGUI);
+                register_code(KC_LSFT);
                 SEND_STRING("q");
-                unregister_code(KC_ALGR);
-            }
-            break;
-
-        case FEN_UE:
-            if (record->event.pressed) {
-                register_code(KC_ALGR);
-                SEND_STRING("y");
-                unregister_code(KC_ALGR);
-            }
-            break;
-
-        case FEN_OE:
-            if (record->event.pressed) {
-                register_code(KC_ALGR);
-                SEND_STRING("p");
-                unregister_code(KC_ALGR);
-            }
-            break;
-
-        case FEN_SZ:
-            if (record->event.pressed) {
-                register_code(KC_ALGR);
-                SEND_STRING("s");
-                unregister_code(KC_ALGR);
-            }
-            break;
-
-        case FEN_EUR:
-            if (record->event.pressed) {
-                register_code(KC_ALGR);
-                SEND_STRING("5");
-                unregister_code(KC_ALGR);
-            }
-            break;
-
-        case FEN_VMF:
-            if (record->event.pressed) {
-                register_code(KC_RCTRL);
-                SEND_STRING("f");
-                unregister_code(KC_RCTRL);
+                unregister_code(KC_LSFT);
+                unregister_code(KC_LGUI);
             }
             break;
     }
@@ -121,13 +83,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_SPECIAL] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      COLEMAK, XXXXXXX, XXXXXXX, FEN_VMF, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      COLEMAK,FEN_KILL,    WM_7,    WM_8,    WM_9, XXXXXXX,                      XXXXXXX, XXXXXXX,   WM_UP, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      XXXXXXX, WM_LAUN,    WM_4,    WM_5,    WM_6, XXXXXXX,                      XXXXXXX, WM_LEFT, WM_DOWN,WM_RIGHT, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      XXXXXXX, XXXXXXX,    WM_1,    WM_2,    WM_3, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX
+                                             WM_0, XXXXXXX, XXXXXXX,    XXXXXXX, KC_LSFT, XXXXXXX
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -135,7 +97,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       _______, KC_EXLM,   KC_AT, KC_LCBR, KC_RCBR, KC_ASTR,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, KC_HASH,  KC_DLR, KC_LPRN, KC_RPRN,  KC_GRV,                      XXXXXXX,  KC_EQL, FEN_EUR, XXXXXXX, XXXXXXX, XXXXXXX,
+      XXXXXXX, KC_HASH,  KC_DLR, KC_LPRN, KC_RPRN,  KC_GRV,                      XXXXXXX,  KC_EQL,   SPC_E, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       XXXXXXX, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TILD,                      XXXXXXX, KC_BSLS, KC_AMPR, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
@@ -145,9 +107,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_UMLAUT] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      _______, _______, _______, _______, _______, _______,                      _______, _______,  FEN_UE, _______, _______, _______,
+      _______, _______, _______, _______, _______, _______,                      _______, _______,   UML_U, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______,  FEN_AE, _______, FEN_SZ, _______, _______,                      _______, _______,  _______, _______,  FEN_OE, _______,
+      _______,   UML_A, _______,   UML_S, _______, _______,                      _______, _______, _______, _______,   UML_O, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, _______, _______, _______, _______, _______,                      _______, _______, _______, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|

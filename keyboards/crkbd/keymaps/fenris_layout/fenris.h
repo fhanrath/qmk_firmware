@@ -1,10 +1,5 @@
 enum cutom_keycodes {
-    FEN_AE = SAFE_RANGE,
-    FEN_UE,
-    FEN_OE,
-    FEN_SZ,
-    FEN_EUR,
-    FEN_VMF
+    FEN_KILL = SAFE_RANGE
 };
 
 enum layers {
@@ -37,6 +32,32 @@ enum layers {
 #define OS_LSFT  OSM(MOD_LSFT)          //OneShotModifier Tap to modify next key. Holding works too
 #define OS_RSFT  OSM(MOD_RSFT)
 #define OS_ALT   OSM(MOD_LALT)
+
+#define UML_A RALT(KC_Q)
+#define UML_S RALT(KC_S)
+#define UML_U RALT(KC_Y)
+#define UML_O RALT(KC_P)
+
+#define SPC_E RALT(KC_5)
+
+#define WM_UP LGUI(KC_UP)
+#define WM_DOWN LGUI(KC_DOWN)
+#define WM_LEFT LGUI(KC_LEFT)
+#define WM_RIGHT LGUI(KC_RGHT)
+
+#define WM_1 LGUI(KC_1)
+#define WM_2 LGUI(KC_2)
+#define WM_3 LGUI(KC_3)
+#define WM_4 LGUI(KC_4)
+#define WM_5 LGUI(KC_5)
+#define WM_6 LGUI(KC_6)
+#define WM_7 LGUI(KC_7)
+#define WM_8 LGUI(KC_8)
+#define WM_9 LGUI(KC_9)
+#define WM_0 LGUI(KC_0)
+
+#define WM_LAUN LGUI(KC_D)
+
 
 
 
