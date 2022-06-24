@@ -51,6 +51,8 @@ keyboard_config_t keyboard_config;
 uint16_t          dpi_array[] = PLOOPY_DPI_OPTIONS;
 #define DPI_OPTION_SIZE (sizeof(dpi_array) / sizeof(uint16_t))
 
+#define PLOOPY_DRAGSCROLL_DENOMINATOR 20
+
 // TODO: Implement libinput profiles
 // https://wayland.freedesktop.org/libinput/doc/latest/pointer-acceleration.html
 // Compile time accel selection
@@ -65,6 +67,9 @@ uint16_t lastMidClick      = 0;      // Stops scrollwheel from being read if it 
 uint8_t  OptLowPin         = OPT_ENC1;
 bool     debug_encoder     = false;
 bool     is_drag_scroll    = false;
+
+static int _dragscroll_accumulator_x = 0;
+static int _dragscroll_accumulator_y = 0;
 
 __attribute__((weak)) bool encoder_update_user(uint8_t index, bool clockwise) { return true; }
 
@@ -119,13 +124,27 @@ report_mouse_t pointing_device_task_kb(report_mouse_t mouse_report) {
     process_wheel();
 
     if (is_drag_scroll) {
-        mouse_report.h = mouse_report.x;
+        _dragscroll_accumulator_x += mouse_report.x;
 #ifdef PLOOPY_DRAGSCROLL_INVERT
         // Invert vertical scroll direction
-        mouse_report.v = -mouse_report.y;
+        _dragscroll_accumulator_y += -mouse_report.y;
 #else
-        mouse_report.v = mouse_report.y;
+        _dragscroll_accumulator_y += mouse_report.y;
 #endif
+
+        int div_x = _dragscroll_accumulator_x / PLOOPY_DRAGSCROLL_DENOMINATOR;
+        int div_y = _dragscroll_accumulator_y / PLOOPY_DRAGSCROLL_DENOMINATOR;
+
+        if (div_x != 0) {
+            mouse_report.h += div_x;
+            _dragscroll_accumulator_x -= div_x * PLOOPY_DRAGSCROLL_DENOMINATOR;
+        }
+
+        if (div_y != 0) {
+            mouse_report.v += div_y;
+            _dragscroll_accumulator_y -= div_y * PLOOPY_DRAGSCROLL_DENOMINATOR;
+        }
+
         mouse_report.x = 0;
         mouse_report.y = 0;
     }
@@ -161,11 +180,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t* record) {
         {
             is_drag_scroll ^= 1;
         }
-#ifdef PLOOPY_DRAGSCROLL_FIXED
-        pointing_device_set_cpi(is_drag_scroll ? PLOOPY_DRAGSCROLL_DPI : dpi_array[keyboard_config.dpi_config]);
-#else
-        pointing_device_set_cpi(is_drag_scroll ? (dpi_array[keyboard_config.dpi_config] * PLOOPY_DRAGSCROLL_MULTIPLIER) : dpi_array[keyboard_config.dpi_config]);
-#endif
+        pmw3360_set_cpi(dpi_array[keyboard_config.dpi_config] * (is_drag_scroll ? 1 : 1));
     }
 
 /* If Mousekeys is disabled, then use handle the mouse button
