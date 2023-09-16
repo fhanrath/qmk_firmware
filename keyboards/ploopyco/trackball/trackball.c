@@ -49,9 +49,7 @@
 
 keyboard_config_t keyboard_config;
 uint16_t          dpi_array[] = PLOOPY_DPI_OPTIONS;
-#define DPI_OPTION_SIZE (sizeof(dpi_array) / sizeof(uint16_t))
-
-#define PLOOPY_DRAGSCROLL_DENOMINATOR 20
+#define DPI_OPTION_SIZE ARRAY_SIZE(dpi_array)
 
 // TODO: Implement libinput profiles
 // https://wayland.freedesktop.org/libinput/doc/latest/pointer-acceleration.html
@@ -68,9 +66,6 @@ uint8_t  OptLowPin         = OPT_ENC1;
 bool     debug_encoder     = false;
 bool     is_drag_scroll    = false;
 
-static int _dragscroll_accumulator_x = 0;
-static int _dragscroll_accumulator_y = 0;
-
 __attribute__((weak)) bool encoder_update_user(uint8_t index, bool clockwise) { return true; }
 
 bool encoder_update_kb(uint8_t index, bool clockwise) {
@@ -80,7 +75,7 @@ bool encoder_update_kb(uint8_t index, bool clockwise) {
 #ifdef MOUSEKEY_ENABLE
     tap_code(clockwise ? KC_WH_U : KC_WH_D);
 #else
-    mouse_report_t mouse_report = pointing_device_get_report();
+    report_mouse_t mouse_report = pointing_device_get_report();
     mouse_report.v = clockwise ? 1 : -1;
     pointing_device_set_report(mouse_report);
     pointing_device_send();
@@ -117,34 +112,25 @@ void process_wheel(void) {
     int dir = opt_encoder_handler(p1, p2);
 
     if (dir == 0) return;
-    encoder_update_kb(0, dir == 1);
+    encoder_update_kb(0, dir > 0);
 }
 
 report_mouse_t pointing_device_task_kb(report_mouse_t mouse_report) {
     process_wheel();
 
     if (is_drag_scroll) {
-        _dragscroll_accumulator_x += mouse_report.x;
+#ifdef PLOOPY_DRAGSCROLL_H_INVERT
+        // Invert horizontal scroll direction
+        mouse_report.h = -mouse_report.x;
+#else
+        mouse_report.h = mouse_report.x;
+#endif
 #ifdef PLOOPY_DRAGSCROLL_INVERT
         // Invert vertical scroll direction
-        _dragscroll_accumulator_y += -mouse_report.y;
+        mouse_report.v = -mouse_report.y;
 #else
-        _dragscroll_accumulator_y += mouse_report.y;
+        mouse_report.v = mouse_report.y;
 #endif
-
-        int div_x = _dragscroll_accumulator_x / PLOOPY_DRAGSCROLL_DENOMINATOR;
-        int div_y = _dragscroll_accumulator_y / PLOOPY_DRAGSCROLL_DENOMINATOR;
-
-        if (div_x != 0) {
-            mouse_report.h += div_x;
-            _dragscroll_accumulator_x -= div_x * PLOOPY_DRAGSCROLL_DENOMINATOR;
-        }
-
-        if (div_y != 0) {
-            mouse_report.v += div_y;
-            _dragscroll_accumulator_y -= div_y * PLOOPY_DRAGSCROLL_DENOMINATOR;
-        }
-
         mouse_report.x = 0;
         mouse_report.y = 0;
     }
@@ -180,7 +166,11 @@ bool process_record_kb(uint16_t keycode, keyrecord_t* record) {
         {
             is_drag_scroll ^= 1;
         }
-        pmw3360_set_cpi(dpi_array[keyboard_config.dpi_config] * (is_drag_scroll ? 1 : 1));
+#ifdef PLOOPY_DRAGSCROLL_FIXED
+        pointing_device_set_cpi(is_drag_scroll ? PLOOPY_DRAGSCROLL_DPI : dpi_array[keyboard_config.dpi_config]);
+#else
+        pointing_device_set_cpi(is_drag_scroll ? (dpi_array[keyboard_config.dpi_config] * PLOOPY_DRAGSCROLL_MULTIPLIER) : dpi_array[keyboard_config.dpi_config]);
+#endif
     }
 
 /* If Mousekeys is disabled, then use handle the mouse button
@@ -188,14 +178,6 @@ bool process_record_kb(uint16_t keycode, keyrecord_t* record) {
  * the keycodes in a consistent manner.  But only do this if
  * Mousekeys is not enable, so it's not handled twice.
  */
-#ifndef MOUSEKEY_ENABLE
-    if (IS_MOUSEKEY_BUTTON(keycode)) {
-        report_mouse_t currentReport = pointing_device_get_report();
-        currentReport.buttons        = pointing_device_handle_buttons(currentReport.buttons, record->event.pressed, keycode - KC_MS_BTN1);
-        pointing_device_set_report(currentReport);
-        pointing_device_send();
-    }
-#endif
 
     return true;
 }
@@ -214,10 +196,10 @@ void keyboard_pre_init_kb(void) {
      * pathways to ground. If you're messing with this, know this: driving ANY
      * of these pins high will cause a short. On the MCU. Ka-blooey.
      */
-#ifdef UNUSED_PINS
-    const pin_t unused_pins[] = UNUSED_PINS;
+#ifdef UNUSABLE_PINS
+    const pin_t unused_pins[] = UNUSABLE_PINS;
 
-    for (uint8_t i = 0; i < (sizeof(unused_pins) / sizeof(pin_t)); i++) {
+    for (uint8_t i = 0; i < ARRAY_SIZE(unused_pins); i++) {
         setPinOutput(unused_pins[i]);
         writePinLow(unused_pins[i]);
     }
