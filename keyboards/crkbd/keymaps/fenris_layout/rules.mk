@@ -1,5 +1,5 @@
 OLED_ENABLE = yes
-OLED_DRIVER = SSD1306
+OLED_DRIVER = ssd1306
 LTO_ENABLE = yes
 BOOTMAGIC_ENABLE = no       # Enable Bootmagic Lite
 

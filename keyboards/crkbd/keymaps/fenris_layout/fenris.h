@@ -15,7 +15,7 @@ enum layers {
 // Aliases for readability
 
 #define COLEMAK  TO(_COLEMAKDH)        // Default
-#define SPECIAL  TO(_SPECIAL)
+#define SPECIAL  MO(_SPECIAL)
 
 #define MO_UML   MO(_UMLAUT)            // Switch while held
 #define MO_SYM   MO(_SYMBOL)            
@@ -60,8 +60,6 @@ enum layers {
 #define WM_FSCR LGUI(KC_F)
 
 
-
-
 // Tap Dance
 
 enum {
@@ -71,8 +69,15 @@ enum {
 
 typedef enum {
     TD_NONE,
+    TD_UNKNOWN,
     TD_SINGLE_TAP,
-    TD_SINGLE_HOLD
+    TD_SINGLE_TAP_INTERRUPT,
+    TD_SINGLE_HOLD,
+    TD_DOUBLE_TAP,
+    TD_DOUBLE_HOLD,
+    TD_DOUBLE_SINGLE_TAP, // Send two single taps
+    TD_TRIPLE_TAP,
+    TD_TRIPLE_HOLD
 } td_state_t;
 
 typedef struct {
@@ -81,12 +86,12 @@ typedef struct {
 
 
 // Function associated with all tap dances
-td_state_t cur_dance_tap_hold(qk_tap_dance_state_t *state);
+td_state_t cur_dance_tap_hold(tap_dance_state_t *state);
 
 // Functions associated with individual tap dances
-void nav_uml_finished(qk_tap_dance_state_t *state, void *user_data);
-void num_sim_reset(qk_tap_dance_state_t *state, void *user_data);
+void nav_uml_finished(tap_dance_state_t *state, void *user_data);
+void nav_uml_reset(tap_dance_state_t *state, void *user_data);
 
 // Functions associated with individual tap dances
-void num_sim_finished(qk_tap_dance_state_t *state, void *user_data);
-void nav_uml_reset(qk_tap_dance_state_t *state, void *user_data);
+void num_sim_finished(tap_dance_state_t *state, void *user_data);
+void num_sim_reset(tap_dance_state_t *state, void *user_data);

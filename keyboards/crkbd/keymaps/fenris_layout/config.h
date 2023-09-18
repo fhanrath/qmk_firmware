@@ -30,7 +30,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define USE_SERIAL_PD2
 
-#define IGNORE_MOD_TAP_INTERRUPT
 #define TAPPING_TERM 200
 
 //use my font. made with https://helixfonteditor.netlify.app via https://github.com/RustyJonez/OLED-ART-tinkering

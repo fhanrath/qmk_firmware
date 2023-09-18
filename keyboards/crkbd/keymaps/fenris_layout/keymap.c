@@ -38,9 +38,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 // Tap Dance
 
-qk_tap_dance_action_t tap_dance_actions[] = {
-	[TD_NUM_SYM] = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, num_sim_finished, num_sim_reset, 200),
-	[TD_NAV_UML] = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, nav_uml_finished, nav_uml_reset, 200),
+tap_dance_action_t tap_dance_actions[] = {
+	[TD_NUM_SYM] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, num_sim_finished, num_sim_reset),
+	[TD_NAV_UML] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, nav_uml_finished, nav_uml_reset),
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -50,7 +50,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
        KC_TAB,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                         KC_M,    KC_N,    KC_E,    KC_I,    KC_O, KC_QUOT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     KC_LCTRL,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, KC_MINS,
+      KC_LCTL,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, KC_MINS,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                    TD(TD_NAV_UML),  KC_SPC, KC_LOPT,    KC_ENT,  OS_RSFT,  TD(TD_NUM_SYM)
                                       //`--------------------------'  `--------------------------'
@@ -63,9 +63,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       XXXXXXX, KC_LGUI,   KC_F4,   KC_F5,   KC_F6,  KC_F11,                      XXXXXXX,    KC_4,    KC_5,    KC_6, KC_COMM,  KC_DOT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, KC_LALT,   KC_F1,   KC_F2,   KC_F3,  KC_F12,                      XXXXXXX,    KC_1,    KC_2,    KC_3,  KC_EQL, KC_MINS,
+      _______, KC_LALT,   KC_F1,   KC_F2,   KC_F3,  KC_F12,                         KC_0,    KC_1,    KC_2,    KC_3,  KC_EQL, KC_MINS,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          SPECIAL, _______, _______,    _______, _______,    KC_0
+                                          SPECIAL, _______, _______,    _______, _______, XXXXXXX
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -83,13 +83,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_SPECIAL] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      COLEMAK,FEN_KILL,    WM_7,    WM_8,    WM_9, XXXXXXX,                      XXXXXXX, XXXXXXX,   WM_UP, XXXXXXX, XXXXXXX, XXXXXXX,
+      COLEMAK,FEN_KILL,    WM_7,    WM_8,    WM_9,    WM_0,                      XXXXXXX, XXXXXXX,   WM_UP, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       XXXXXXX, WM_LAUN,    WM_4,    WM_5,    WM_6, XXXXXXX,                      XXXXXXX, WM_LEFT, WM_DOWN,WM_RIGHT, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       XXXXXXX, WM_FSCR,    WM_1,    WM_2,    WM_3, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                             WM_0, XXXXXXX, XXXXXXX,    XXXXXXX, KC_LSFT, XXXXXXX
+                                          XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, KC_LSFT, XXXXXXX
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -101,7 +101,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       XXXXXXX, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TILD,                      XXXXXXX, KC_BSLS, KC_AMPR, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          XXXXXXX, _______, XXXXXXX,    XXXXXXX, _______, XXXXXXX
+                                          SPECIAL, _______, _______,    _______, _______, XXXXXXX
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -113,13 +113,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, _______, _______, _______, _______, _______,                      _______, _______, _______, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______, _______, _______,    _______, _______, _______
+                                          XXXXXXX, _______, _______,    _______, _______, SPECIAL
                                       //`--------------------------'  `--------------------------'
   )
 };
 
 #ifdef RGB_MATRIX_ENABLE
-void rgb_matrix_indicators_user(void) {
+bool rgb_matrix_indicators_user(void) {
     switch(get_highest_layer(layer_state|default_layer_state)) {
         case _NUMBERS:
             //rgb_matrix_sethsv_noeeprom(128, 255, 255);
@@ -146,6 +146,7 @@ void rgb_matrix_indicators_user(void) {
             rgb_matrix_set_color_all(16, 0, 64);
             break;
     }
+    return true;
 }
 #endif
 
@@ -202,9 +203,28 @@ bool oled_task_user(void) {
 #endif // OLED_ENABLE
 
 // Determine the current tap dance state
-td_state_t cur_dance_tap_hold(qk_tap_dance_state_t *state) {
-    if (!state->pressed) return TD_SINGLE_TAP;
-    else return TD_SINGLE_HOLD;
+td_state_t cur_dance_tap_hold(tap_dance_state_t *state) {
+    if (state->count == 1) {
+        if (!state->pressed) return TD_SINGLE_TAP;
+        if (state->interrupted) return TD_SINGLE_TAP_INTERRUPT;
+        // Key has not been interrupted, but the key is still held. Means you want to send a 'HOLD'.
+        else return TD_SINGLE_HOLD;
+    } else if (state->count == 2) {
+        // TD_DOUBLE_SINGLE_TAP is to distinguish between typing "pepper", and actually wanting a double tap
+        // action when hitting 'pp'. Suggested use case for this return value is when you want to send two
+        // keystrokes of the key, and not the 'double tap' action/macro.
+        if (state->interrupted) return TD_DOUBLE_SINGLE_TAP;
+        else if (state->pressed) return TD_DOUBLE_HOLD;
+        else return TD_DOUBLE_TAP;
+    }
+
+    // Assumes no one is trying to type the same letter three times (at least not quickly).
+    // If your tap dance key is 'KC_W', and you want to type "www." quickly - then you will need to add
+    // an exception here to return a 'TD_TRIPLE_SINGLE_TAP', and define that enum just like 'TD_DOUBLE_SINGLE_TAP'
+    if (state->count == 3) {
+        if (state->interrupted || !state->pressed) return TD_TRIPLE_TAP;
+        else return TD_TRIPLE_HOLD;
+    } else return TD_UNKNOWN;
 }
 
 // Initialize tap structure associated with example tap dance key
@@ -213,24 +233,29 @@ static td_tap_t num_sim_tap_state = {
 };
 
 // Functions that control what our tap dance key does
-void num_sim_finished(qk_tap_dance_state_t *state, void *user_data) {
+void num_sim_finished(tap_dance_state_t *state, void *user_data) {
     num_sim_tap_state.state = cur_dance_tap_hold(state);
     switch (num_sim_tap_state.state) {
-        case TD_SINGLE_TAP:
-            layer_move(_NUMBERS);
-            break;
         case TD_SINGLE_HOLD:
+        case TD_SINGLE_TAP_INTERRUPT:
             layer_on(_SYMBOL);
+            break;
+        case TD_DOUBLE_HOLD:
+        case TD_DOUBLE_SINGLE_TAP:
+            layer_on(_NUMBERS);
             break;
         default:
             break;
     }
 }
 
-void num_sim_reset(qk_tap_dance_state_t *state, void *user_data) {
+void num_sim_reset(tap_dance_state_t *state, void *user_data) {
     // If the key was held down and now is released then switch off the layer
-    if (num_sim_tap_state.state == TD_SINGLE_HOLD) {
+    if (num_sim_tap_state.state == TD_SINGLE_HOLD || num_sim_tap_state.state == TD_SINGLE_TAP_INTERRUPT) {
         layer_off(_SYMBOL);
+    }
+    if (num_sim_tap_state.state == TD_DOUBLE_HOLD || num_sim_tap_state.state == TD_DOUBLE_SINGLE_TAP) {
+        layer_off(_NUMBERS);
     }
     num_sim_tap_state.state = TD_NONE;
 }
@@ -241,24 +266,29 @@ static td_tap_t nav_uml_tap_state = {
 };
 
 // Functions that control what our tap dance key does
-void nav_uml_finished(qk_tap_dance_state_t *state, void *user_data) {
+void nav_uml_finished(tap_dance_state_t *state, void *user_data) {
     nav_uml_tap_state.state = cur_dance_tap_hold(state);
     switch (nav_uml_tap_state.state) {
-        case TD_SINGLE_TAP:
-            layer_move(_NAVIGATION);
-            break;
         case TD_SINGLE_HOLD:
+        case TD_SINGLE_TAP_INTERRUPT:
             layer_on(_UMLAUT);
+            break;
+        case TD_DOUBLE_HOLD:
+        case TD_DOUBLE_SINGLE_TAP:
+            layer_on(_NAVIGATION);
             break;
         default:
             break;
     }
 }
 
-void nav_uml_reset(qk_tap_dance_state_t *state, void *user_data) {
+void nav_uml_reset(tap_dance_state_t *state, void *user_data) {
     // If the key was held down and now is released then switch off the layer
-    if (nav_uml_tap_state.state == TD_SINGLE_HOLD) {
+    if (nav_uml_tap_state.state == TD_SINGLE_HOLD || nav_uml_tap_state.state == TD_SINGLE_TAP_INTERRUPT) {
         layer_off(_UMLAUT);
+    }
+    if (nav_uml_tap_state.state == TD_DOUBLE_HOLD || nav_uml_tap_state.state == TD_DOUBLE_SINGLE_TAP) {
+        layer_off(_NAVIGATION);
     }
     nav_uml_tap_state.state = TD_NONE;
 }
